@@ -1,6 +1,9 @@
 use std::io;
+use std::collections;
+
 
 fn main() {
+
     println!("Welcome to Fibonacci calculator");
     loop{
         println!("Enter your input");
@@ -8,17 +11,24 @@ fn main() {
         io::stdin()
             .read_line(&mut input).expect("Failed to read input");
         let input = input.trim().parse().expect("Not a number?");
-        let result = calculate_fibonacci(input);
+        let mut fib_store:collections::HashMap<i32,i32> = collections::HashMap::new();
+        let result = calculate_fibonacci(input,&mut fib_store);
         println!("The fibonacci of {input} is {result}!");
     }
 }
 
-fn calculate_fibonacci(fib: i32) -> i32{
+fn calculate_fibonacci(fib: i32, store:&mut collections::HashMap<i32,i32>) -> i32{
+    if store.contains_key(&fib){
+        return *store.get(&fib).unwrap();
+    }
+
     if fib <= 0 {
         return 0
     } 
     if fib == 1{
         return 1
     }
-    return calculate_fibonacci(fib - 1) + calculate_fibonacci(fib - 2)
+    let result = calculate_fibonacci(fib - 1,store) + calculate_fibonacci(fib - 2,store);
+    store.insert(fib, result);
+    result
 }

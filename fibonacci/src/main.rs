@@ -11,13 +11,13 @@ fn main() {
         io::stdin()
             .read_line(&mut input).expect("Failed to read input");
         let input = input.trim().parse().expect("Not a number?");
-        let mut fib_store:collections::HashMap<i32,i32> = collections::HashMap::new();
+        let mut fib_store:collections::HashMap<i128,i128> = collections::HashMap::new();
         let result = calculate_fibonacci(input,&mut fib_store);
         println!("The fibonacci of {input} is {result}!");
     }
 }
 
-fn calculate_fibonacci(fib: i32, store:&mut collections::HashMap<i32,i32>) -> i32{
+fn calculate_fibonacci(fib: i128, store:&mut collections::HashMap<i128,i128>) -> i128{
     if store.contains_key(&fib){
         return *store.get(&fib).unwrap();
     }
